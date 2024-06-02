@@ -2,14 +2,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const http = require('https');
 const axios = require('axios');
 const utils = require("./utils/utils");
+const connectDb = require('./configs/dbConnection');
+const TokenSchema = require("./models/tokenModel");
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+connectDb();
 //Variable
 const HOST = 'creator.zoho.com';
 const AUTHHOST = 'accounts.zoho.com';
@@ -28,8 +30,19 @@ app.post("/generateToken", async (req, res) => {
             `&refresh_token=${REFRESHTOKEN}`;
 
 
-        await axios.post(urlPath).then(function (response) {
-            //console.log(response.data);
+        await axios.post(urlPath).then(async function (response) {
+            console.log(response.data);
+
+            // Kiểm tra dữ liệu response.data
+        if (!response.data.access_token) {
+            res.status(400).json({ error: "Incomplete token data" });
+            return;
+        }
+
+        const token = await TokenSchema.create({
+            access_token: response.data.access_token,
+        });
+
             res.send(response.data['access_token']);
         });
     }
