@@ -11,11 +11,12 @@ const recordRoutes = require('./routes/recordRoutes');
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
-app.use(errorHandler);
+
 connectDb();
 
 app.use('/api', tokenRoutes);
 app.use('/api', recordRoutes);
+app.use(errorHandler);
 
 app.listen(5001, () => {
     console.log('Listening on 5001');

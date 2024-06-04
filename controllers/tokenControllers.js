@@ -2,6 +2,7 @@
 const axios = require('axios');
 const utils = require("../utils/utils");
 const TokenSchema = require("../models/tokenModel");
+const bcrypt = require("bcrypt");
 
 const AUTHHOST = 'accounts.zoho.com';
 const REFRESHTOKEN = utils.Refresh_Token;
@@ -23,8 +24,10 @@ const generateToken = async (req, res, next) => {
                 return;
             }
 
+            const hashedToken = await bcrypt.hash(response.data.access_token, 12);
+
             const token = await TokenSchema.create({
-                access_token: response.data.access_token,
+                access_token: response.data.access_token
             });
 
             res.send(response.data['access_token']);
