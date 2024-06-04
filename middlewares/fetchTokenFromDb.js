@@ -5,9 +5,12 @@ const TokenSchema = require("../models/tokenModel");
 const fetchTokenFromDb = async (req, res, next) => {
     try {
         let latestToken = await TokenSchema.findOne().sort({ createdAt: -1 });
-        let currentTIme = Date.now();
+
+        const vietnamTimeOffset = 7 * 60 * 60 * 1000;
+        let currentTime = Date.now() + vietnamTimeOffset;
+
         let expireTime = latestToken.expireTime;
-        if (latestToken && currentTIme < expireTime) {
+        if (latestToken && currentTime < expireTime) {
             req.latestToken = latestToken;
             console.log(latestToken);
         } else {
