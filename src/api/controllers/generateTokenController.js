@@ -1,6 +1,6 @@
 'use strict';
 const axios = require('axios');
-const utils = require("../utils/utils");
+const utils = require("../../utils/utils");
 const TokenSchema = require("../models/tokenModel");
 const AES256 = require('aes-everywhere');
 

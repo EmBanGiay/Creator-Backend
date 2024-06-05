@@ -3,11 +3,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const connectDb = require('./configs/dbConnection');
-const errorHandler = require('./middlewares/errorHandler');
+const errorHandler = require('./api/middlewares/errorHandler');
+const tokenRoutes = require('./api/routes/tokenRoute');
+const recordRoutes = require('./api/routes/recordRoute');
 
-const systemStart = require('./start/systemStarter') 
-const tokenRoutes = require('./routes/tokenRoute');
-const recordRoutes = require('./routes/recordRoute');
+require('./start/systemStarter');
 
 const app = express();
 app.use(bodyParser.json());

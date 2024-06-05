@@ -1,7 +1,6 @@
 'use strict';
 const axios = require('axios');
-const utils = require("../utils/utils");
-const TokenSchema = require("../models/tokenModel");
+const utils = require("../../utils/utils");
 const AES256 = require('aes-everywhere');
 
 const HOST = 'creator.zoho.com';

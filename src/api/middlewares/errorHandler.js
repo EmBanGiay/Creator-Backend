@@ -1,4 +1,4 @@
-const { constrants } = require("../contrants");
+const { constrants } = require("../../constrants");
 
 const errorHandler = (err, req, res, next) => {
   const statusCode = res.statusCode ? res.statusCode : 500;
