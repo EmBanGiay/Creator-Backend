@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
-const { getRecord } = require('../controllers/recordControllers');
-const { fetchTokenFromDb } = require('../middlewares/fetchTokenFromDb');
+const { getRecord } = require('../controllers/recordController');
+const { fetchTokenFromDb } = require('../controllers/fetchTokenFromDb');
 
 const router = express.Router();
 

@@ -25,7 +25,7 @@ tokenSchema.pre('save', function (next) {
     const vietnamTimeOffset = 7 * 60 * 60 * 1000;
     this.createdAt = new Date(this.createdAt.getTime() + vietnamTimeOffset);
     // //set expireTime auto
-    const expireTimeOffset = 60 * 60 * 1000; 
+    const expireTimeOffset = 0.5 * 60 * 1000; 
     this.expireTime = new Date(this.expireTime.getTime() + vietnamTimeOffset + expireTimeOffset);
 
     next();
