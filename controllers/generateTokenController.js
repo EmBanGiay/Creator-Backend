@@ -8,20 +8,7 @@ const AUTHHOST = 'accounts.zoho.com';
 const REFRESHTOKEN = utils.Refresh_Token;
 const CLIENTID = utils.Client_Id;
 const CLIENTSECRET = utils.Client_Secret;
-const interval = 0.5;//minutes
-
-const scheduleJob = () => {
-    // Schedule a job to run every 30 seconds using node-schedule
-    schedule.scheduleJob('*/30 * * * * *', async () => {
-        console.log('Init job every 30 seconds');
-        try {
-            await axios.post('http://localhost:5001/api/generateToken');
-        } catch (e) {
-            console.error('Error in scheduled job:', e);
-        }
-    });
-    console.log('Scheduled job to run every 30 seconds.');
-};
+const interval = 30;//minutes
 
 const generateToken = async (req, res, next) => {
     try {
@@ -49,7 +36,10 @@ const generateToken = async (req, res, next) => {
             }
             console.log(generateTokenResponse);
 
-            
+            // schedule.scheduleJob(`*/${interval} * * * *`, async () => {
+            //     console.log(`Init job every ${interval} minute(s)`);
+            //     await axios.post('http://localhost:5001/api/generateToken');
+            // });
 
             res.send(generateTokenResponse);
 
@@ -59,8 +49,11 @@ const generateToken = async (req, res, next) => {
     }
 };
 
-// Schedule the job after generating the token
-    scheduleJob();
+schedule.scheduleJob(`*/${interval} * * * *`, async () => {
+        console.log(`Init job every ${interval} minute(s)`);
+        await axios.post('http://localhost:5001/api/generateToken');
+
+});
 
 module.exports = {
     generateToken,

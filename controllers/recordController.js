@@ -2,9 +2,11 @@
 const axios = require('axios');
 const utils = require("../utils/utils");
 const TokenSchema = require("../models/tokenModel");
+const AES256 = require('aes-everywhere');
 
 const HOST = 'creator.zoho.com';
 const APPURI = utils.App_URI;
+const KEY = utils.Key;
 
 const getRecord = async (req, res) => {
     
@@ -20,7 +22,7 @@ const getRecord = async (req, res) => {
         }
         await axios.get(urlPath, {
             headers: {
-                Authorization: `Zoho-oauthtoken ${accessToken}`
+                Authorization: `Zoho-oauthtoken ${AES256.decrypt(accessToken, KEY)}`
             }
         }).then(function (response) {
             res.send(response.data);
@@ -33,6 +35,8 @@ const getRecord = async (req, res) => {
         res.status(500).send({ message: 'Error generating access token' });
     }
 };
+
+//Other APIs like add Records,
 
 module.exports = {
     getRecord,
