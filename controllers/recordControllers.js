@@ -14,7 +14,7 @@ const getRecord = async (req, res) => {
         let accessToken
         if (!req.latestToken) {
             accessToken = await axios.post('http://localhost:5001/api/generateToken');
-            accessToken = accessToken.data;
+            accessToken = accessToken.data.access_token;
         }else{
             accessToken = req.latestToken.access_token;
         }
